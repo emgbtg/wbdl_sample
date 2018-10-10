@@ -81,14 +81,14 @@ struct Result: Codable {
     let thumbnail: Thumbnail
 //    let images: [Thumbnail]
 //    let creators: Creators
-//    let characters: Characters
+    let characters: Characters
 //    let stories: Stories
 //    let events: Characters
     
     enum CodingKeys: String, CodingKey {
         case id
         case digitalID = "digitalId"
-        case title, thumbnail
+        case title, thumbnail, characters
         //case title, issueNumber, variantDescription, description, modified, isbn, upc, diamondCode, ean, issn, format, pageCount, textObjects, resourceURI, series, variants, collections, collectedIssues, dates, prices, thumbnail, images, creators, characters, stories, events
     }
 }

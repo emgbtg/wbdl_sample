@@ -29,14 +29,9 @@ class Networking {
                 }
                 
                 do{
-//                    let json = try JSONSerialization.jsonObject(with: (data), options: []) as! NSDictionary
-//                    print(json)
                     if let comicObject = try? JSONDecoder().decode(Welcome.self, from: data) {
                         print(comicObject)
                     }
-                }catch let error as NSError{
-                    print(error)
-                    
                 }
             }
             task.resume()
