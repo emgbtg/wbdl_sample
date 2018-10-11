@@ -1,47 +1,3 @@
-
-//
-//import Foundation
-//
-//
-//
-//
-//class Data: NSObject, Decodable {
-//    var offset: Int
-//    var results: [Results] = [Results]()
-//}
-//
-//class Results: NSObject, Decodable {
-//    var id: Int
-//    var title: String
-//    var thumbnail: Thumbnail
-//}
-//
-//class Thumbnail: NSObject, Decodable {
-//    var path: String
-//    var ext: String
-//    enum Thumbnail: String,CodingKey
-//    {
-//        //cannot use extension as a variable name.
-//        case ext = "extension"
-//        case path
-//    }
-//
-//}
-//class Comic: NSObject, Decodable {
-//    var code: Int
-//    var status: String
-//    var data: Data
-//
-//}
-// To parse and unparse this JSON data, add this code to your project and do:
-//
-//    welcome, err := UnmarshalWelcome(bytes)
-//    bytes, err = welcome.Marshal()
-
-// To parse the JSON, add this file to your project and do:
-//
-//   let welcome = try? newJSONDecoder().decode(Welcome.self, from: jsonData)
-
 import Foundation
 
 struct Welcome: Codable {
@@ -76,11 +32,11 @@ struct Result: Codable {
 //    let series: Series
 //    let variants, collections: [Series]
 //    let collectedIssues: [JSONAny]
-//    let dates: [DateElement]
-//    let prices: [Price]
+    let dates: [DateElement]
+    let prices: [Price]
     let thumbnail: Thumbnail
 //    let images: [Thumbnail]
-//    let creators: Creators
+    let creators: Creators
     let characters: Characters
 //    let stories: Stories
 //    let events: Characters
@@ -88,7 +44,7 @@ struct Result: Codable {
     enum CodingKeys: String, CodingKey {
         case id
         case digitalID = "digitalId"
-        case title, thumbnail, characters
+        case title, thumbnail, characters, dates, prices, creators
         //case title, issueNumber, variantDescription, description, modified, isbn, upc, diamondCode, ean, issn, format, pageCount, textObjects, resourceURI, series, variants, collections, collectedIssues, dates, prices, thumbnail, images, creators, characters, stories, events
     }
 }
