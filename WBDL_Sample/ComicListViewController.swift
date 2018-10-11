@@ -22,6 +22,7 @@ class ComicListViewController: UIViewController, UICollectionViewDelegate, UICol
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var searchTextField: UITextField!
     let networking = Networking()
+    var selectedComic: Comic!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,6 +56,20 @@ class ComicListViewController: UIViewController, UICollectionViewDelegate, UICol
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let itemSize = (collectionView.frame.width - (collectionView.contentInset.left + collectionView.contentInset.right + 10)) / 2
         return CGSize(width: itemSize, height: itemSize)
+    }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath){
+        selectedComic = networking.comics[indexPath.row]
+        networking.getComicDetials(comic: selectedComic, dataLoadedCallbackFunction: detailLoaded)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        //let detailVC = segue.destination as! VenueDetailViewController
+        //detailVC.venueDetails = networking.venueDetail
+        
+        
+    }
+    func detailLoaded() {
+        performSegue(withIdentifier: "toDetail", sender: self)
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

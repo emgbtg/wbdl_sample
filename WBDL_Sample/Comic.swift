@@ -1,6 +1,6 @@
 import Foundation
 
-struct Welcome: Codable {
+struct ComicResult: Codable {
     let code: Int
     let status, copyright, attributionText, attributionHTML: String
     let etag: String
@@ -9,10 +9,10 @@ struct Welcome: Codable {
 
 struct DataClass: Codable {
     let offset, limit, total, count: Int
-    let results: [Comics]
+    let results: [Comic]
 }
 
-struct Comics: Codable {
+struct Comic: Codable {
     let id, digitalID: Int
     let title: String
 //    let issueNumber: Int
@@ -29,7 +29,7 @@ struct Comics: Codable {
 //    let textObjects: [TextObject]
 //    let resourceURI: String
 //    //let urls: [URL]
-//    let series: Series
+    let series: ComicSeries
 //    let variants, collections: [Series]
 //    let collectedIssues: [JSONAny]
     //let dates: [DateElement]
@@ -43,7 +43,7 @@ struct Comics: Codable {
     
     enum CodingKeys: String, CodingKey {
         case digitalID = "digitalId"
-        case title, thumbnail, characters, id
+        case title, thumbnail, characters, id, series
         //case title, issueNumber, variantDescription, description, modified, isbn, upc, diamondCode, ean, issn, format, pageCount, textObjects, resourceURI, series, variants, collections, collectedIssues, dates, prices, thumbnail, images, creators, characters, stories, events
     }
 }
@@ -51,11 +51,11 @@ struct Comics: Codable {
 struct Characters: Codable {
     let available: Int
     let collectionURI: String
-    let items: [Series]
+    let items: [ComicSeries]
     let returned: Int
 }
 
-struct Series: Codable {
+struct ComicSeries: Codable {
     let resourceURI: String
     let name: String
 }
