@@ -9,10 +9,10 @@ struct Welcome: Codable {
 
 struct DataClass: Codable {
     let offset, limit, total, count: Int
-    let results: [Result]
+    let results: [Comics]
 }
 
-struct Result: Codable {
+struct Comics: Codable {
     let id, digitalID: Int
     let title: String
 //    let issueNumber: Int
@@ -32,19 +32,18 @@ struct Result: Codable {
 //    let series: Series
 //    let variants, collections: [Series]
 //    let collectedIssues: [JSONAny]
-    let dates: [DateElement]
-    let prices: [Price]
+    //let dates: [DateElement]
+//    let prices: [Price]
     let thumbnail: Thumbnail
 //    let images: [Thumbnail]
-    let creators: Creators
+   // let creators: Creators
     let characters: Characters
 //    let stories: Stories
 //    let events: Characters
     
     enum CodingKeys: String, CodingKey {
-        case id
         case digitalID = "digitalId"
-        case title, thumbnail, characters, dates, prices, creators
+        case title, thumbnail, characters, id
         //case title, issueNumber, variantDescription, description, modified, isbn, upc, diamondCode, ean, issn, format, pageCount, textObjects, resourceURI, series, variants, collections, collectedIssues, dates, prices, thumbnail, images, creators, characters, stories, events
     }
 }

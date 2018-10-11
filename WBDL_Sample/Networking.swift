@@ -13,8 +13,10 @@ class Networking {
     
     var pubKey = "14d1b0a1a810fcbc99316e8a9560e284"
     var privKey = "03cb006270c462eea57919265558dedddbd0916d"
+    var comics: [Comics] = []
+    var totalCount: Int!
     
-    func getComics() {
+    func getComics( dataLoadedCallbackFunction: (() -> Void)?) {
         let timestamp = NSDate().timeIntervalSince1970
         let hash = md5(String(timestamp) + privKey + pubKey)
         let urlString =  "https://gateway.marvel.com/v1/public/comics?apikey=" + pubKey + "&hash=" + hash + "&ts=" + String(timestamp)
@@ -30,8 +32,19 @@ class Networking {
                 
                 do{
                     if let comicObject = try? JSONDecoder().decode(Welcome.self, from: data) {
-                        print(comicObject)
+                        if comicObject.data.results.count > 0 {
+                            self.comics = comicObject.data.results
+                        }
+                        //total count used for infinite scrolling offset calculation
+                        self.totalCount = comicObject.data.total
+                        
+                        if dataLoadedCallbackFunction != nil {
+                            DispatchQueue.main.async(execute: {
+                                dataLoadedCallbackFunction!()
+                            })
+                        }
                     }
+                    
                 }
             }
             task.resume()
