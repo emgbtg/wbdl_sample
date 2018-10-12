@@ -59,7 +59,10 @@ class ComicListViewController: UIViewController, UICollectionViewDelegate, UICol
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath){
         selectedComic = networking.comics[indexPath.row]
-        networking.getComicDetials(comic: selectedComic, dataLoadedCallbackFunction: detailLoaded)
+        networking.getComicDetails(comic: selectedComic, dataLoadedCallbackFunction: detailLoaded)
+        if selectedComic.characters.items.count > 0 {
+            networking.getAllCharactersInComic(items: selectedComic.characters.items , dataLoadedCallbackFunction: nil)
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

@@ -14,7 +14,9 @@ class Networking {
     var pubKey = "14d1b0a1a810fcbc99316e8a9560e284"
     var privKey = "03cb006270c462eea57919265558dedddbd0916d"
     var comics: [Comic] = []
-    var seriesComics: [SeriesComics] = []
+    //var seriesComics: [Item] = []
+    var seriesComicsDict: [String:String] = [:]
+    var comicCharactersDict: [String:String] = [:]
     var totalCount: Int!
     
     func getComics( dataLoadedCallbackFunction: (() -> Void)?) {
@@ -58,58 +60,133 @@ class Networking {
         return urlString
     }
     
-    func getComicDetials(comic: Comic, dataLoadedCallbackFunction: (() -> Void)?) {
-       // let operation1 = BlockOperation{
-            
-         //   func getSeies() {
-               // if comic.series.resourceURI != nil {
-                    let urlString = self.createURL(endpoint: comic.series.resourceURI)
-                    if let url = NSURL(string: urlString) {
-                        var request = URLRequest(url: url as URL)
-                        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
-                        request.httpMethod = "GET"
-                        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-                            guard let data = data, error == nil else {
-                                print("error=\(String(describing: error))")
-                                return
-                            }
-                            
-                            do{
-                                if let seriesObject = try? JSONDecoder().decode(SeriesResult.self, from: data) {
-//                                    if seriesObject.data.seriesResults.comics.items.count > 0 {
-//                                        self.seriesComics = seriesObject.data.results.comics.items
-//                                    }
-
-                                    if dataLoadedCallbackFunction != nil {
-                                        DispatchQueue.main.async(execute: {
-                                            dataLoadedCallbackFunction!()
-                                        })
-                                    }
-                                }
-                                
-                            }
-                        }
-                        task.resume()
-                        
-                    //}
+    func getComicDetails(comic: Comic, dataLoadedCallbackFunction: (() -> Void)?) {
+        // let operation1 = BlockOperation{
+        
+        //   func getSeies() {
+        // if comic.series.resourceURI != nil {
+        let urlString = self.createURL(endpoint: comic.series.resourceURI)
+        if let url = NSURL(string: urlString) {
+            var request = URLRequest(url: url as URL)
+            request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+            request.httpMethod = "GET"
+            let task = URLSession.shared.dataTask(with: request) { data, response, error in
+                guard let data = data, error == nil else {
+                    print("error=\(String(describing: error))")
+                    return
                 }
                 
-          //  }
-            
-            func getCharacters() {
+                do{
+                    if let seriesObject = try? JSONDecoder().decode(SeriesResult.self, from: data) {
+                        if seriesObject.data.seriesResults[0].comics.items.count > 0 {
+                            self.getAllComicsInSeries(items: seriesObject.data.seriesResults[0].comics.items, dataLoadedCallbackFunction: nil)
+                        }
+                        
+                        
+                        if dataLoadedCallbackFunction != nil {
+                            DispatchQueue.main.async(execute: {
+                                dataLoadedCallbackFunction!()
+                            })
+                        }
+                    }
+                    
+                }
             }
+            task.resume()
             
-            func getCreators() {
-                
-            }
-            
-       // }
+            //}
+        }
         
-//        let operation2 = BlockOperation {
-//            print("yay")
-//            // Now, operation2 will fire off once operation1 has completed, with results for artists, tracks and albums
-//        }
-//        operation2.addDependency(operation1)
+        //  }
+        
+        func getCharacters() {
+        }
+        
+        func getCreators() {
+            
+        }
+        
+        // }
+        
+        //        let operation2 = BlockOperation {
+        //            print("yay")
+        //            // Now, operation2 will fire off once operation1 has completed, with results for artists, tracks and albums
+        //        }
+        //        operation2.addDependency(operation1)
+    }
+    
+    func getAllComicsInSeries(items: [Item], dataLoadedCallbackFunction: (() -> Void)?) {
+        
+        for item in items {
+            let urlString = self.createURL(endpoint: item.resourceURI)
+            if let url = NSURL(string: urlString) {
+                var request = URLRequest(url: url as URL)
+                request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+                request.httpMethod = "GET"
+                let task = URLSession.shared.dataTask(with: request) { data, response, error in
+                    guard let data = data, error == nil else {
+                        print("error=\(String(describing: error))")
+                        return
+                    }
+                    
+                    do {
+                        if let comicObject = try? JSONDecoder().decode(ComicResult.self, from: data) {
+                            if comicObject.data.results.count > 0 {
+                                let path = comicObject.data.results[0].thumbnail.path + "." + comicObject.data.results[0].thumbnail.thumbnailExtension.rawValue
+                                self.seriesComicsDict[comicObject.data.results[0].title] = path
+                            }
+                            
+                            if dataLoadedCallbackFunction != nil {
+                                DispatchQueue.main.async(execute: {
+                                    dataLoadedCallbackFunction!()
+                                })
+                            }
+                        }
+                        
+                    }
+                }
+                task.resume()
+                
+                //}
+            }
+        }
+        
+    }
+    
+    func getAllCharactersInComic(items: [Item], dataLoadedCallbackFunction: (() -> Void)?) {
+        for item in items {
+            let urlString = self.createURL(endpoint: item.resourceURI)
+            if let url = NSURL(string: urlString) {
+                var request = URLRequest(url: url as URL)
+                request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+                request.httpMethod = "GET"
+                let task = URLSession.shared.dataTask(with: request) { data, response, error in
+                    guard let data = data, error == nil else {
+                        print("error=\(String(describing: error))")
+                        return
+                    }
+                    
+                    do {
+                        if let characterObject = try? JSONDecoder().decode(ComicCharacter.self, from: data) {
+                            if characterObject.data.results.count > 0 {
+                                let path = characterObject.data.results[0].thumbnail.path + "." + characterObject.data.results[0].thumbnail.thumbnailExtension.rawValue
+                                self.comicCharactersDict[characterObject.data.results[0].name] = path
+                            }
+                            
+                            if dataLoadedCallbackFunction != nil {
+                                DispatchQueue.main.async(execute: {
+                                    dataLoadedCallbackFunction!()
+                                })
+                            }
+                        }
+                        
+                    }
+                }
+                task.resume()
+                
+                //}
+            }
+        }
     }
     
     // function to create an md5 hash string for api authentication

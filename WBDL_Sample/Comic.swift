@@ -51,7 +51,7 @@ struct Comic: Codable {
 struct Characters: Codable {
     let available: Int
     let collectionURI: String
-    let items: [ComicSeries]
+    let items: [Item]
     let returned: Int
 }
 
