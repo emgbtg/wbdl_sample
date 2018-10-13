@@ -23,7 +23,7 @@ class ComicListViewController: UIViewController, UICollectionViewDelegate, UICol
     @IBOutlet weak var searchTextField: UITextField!
     let networking = Networking()
     var selectedComic: Comic!
-    
+     var loadedCount = 0
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -61,18 +61,24 @@ class ComicListViewController: UIViewController, UICollectionViewDelegate, UICol
         selectedComic = networking.comics[indexPath.row]
         networking.getComicDetails(comic: selectedComic, dataLoadedCallbackFunction: detailLoaded)
         if selectedComic.characters.items.count > 0 {
-            networking.getAllCharactersInComic(items: selectedComic.characters.items , dataLoadedCallbackFunction: nil)
+            networking.getAllCharactersInComic(items: selectedComic.characters.items , dataLoadedCallbackFunction: detailLoaded)
         }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        //let detailVC = segue.destination as! VenueDetailViewController
+        let detailVC = segue.destination as! ComicDetailsViewController
+        detailVC.characters = self.networking.comicCharactersArray
+        detailVC.comicsInSeriesDict = self.networking.seriesComicsDict
+        detailVC.comic = self.selectedComic
         //detailVC.venueDetails = networking.venueDetail
-        
-        
     }
     func detailLoaded() {
-        performSegue(withIdentifier: "toDetail", sender: self)
+        //check if character/series == 0
+       loadedCount += 1
+        if loadedCount == 2 {
+            loadedCount = 0
+            performSegue(withIdentifier: "toDetail", sender: self)
+        }
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

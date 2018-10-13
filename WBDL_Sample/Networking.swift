@@ -16,7 +16,7 @@ class Networking {
     var comics: [Comic] = []
     //var seriesComics: [Item] = []
     var seriesComicsDict: [String:String] = [:]
-    var comicCharactersDict: [String:String] = [:]
+    var comicCharactersArray: [CharacterInfo] = []
     var totalCount: Int!
     
     func getComics( dataLoadedCallbackFunction: (() -> Void)?) {
@@ -79,15 +79,15 @@ class Networking {
                 do{
                     if let seriesObject = try? JSONDecoder().decode(SeriesResult.self, from: data) {
                         if seriesObject.data.seriesResults[0].comics.items.count > 0 {
-                            self.getAllComicsInSeries(items: seriesObject.data.seriesResults[0].comics.items, dataLoadedCallbackFunction: nil)
+                            self.getAllComicsInSeries(items: seriesObject.data.seriesResults[0].comics.items, dataLoadedCallbackFunction: dataLoadedCallbackFunction)
                         }
                         
                         
-                        if dataLoadedCallbackFunction != nil {
-                            DispatchQueue.main.async(execute: {
-                                dataLoadedCallbackFunction!()
-                            })
-                        }
+                        //                        if dataLoadedCallbackFunction != nil {
+                        //                            DispatchQueue.main.async(execute: {
+                        //                                dataLoadedCallbackFunction!()
+                        //                            })
+                        //                        }
                     }
                     
                 }
@@ -116,9 +116,18 @@ class Networking {
     }
     
     func getAllComicsInSeries(items: [Item], dataLoadedCallbackFunction: (() -> Void)?) {
-        
+        self.seriesComicsDict = [:]
+        if items.count == 0 {
+            if dataLoadedCallbackFunction != nil {
+                DispatchQueue.main.async(execute: {
+                    dataLoadedCallbackFunction!()
+                })
+            }
+        }
+        var loadedCount = 0
         for item in items {
             let urlString = self.createURL(endpoint: item.resourceURI)
+            
             if let url = NSURL(string: urlString) {
                 var request = URLRequest(url: url as URL)
                 request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
@@ -135,11 +144,13 @@ class Networking {
                                 let path = comicObject.data.results[0].thumbnail.path + "." + comicObject.data.results[0].thumbnail.thumbnailExtension.rawValue
                                 self.seriesComicsDict[comicObject.data.results[0].title] = path
                             }
-                            
-                            if dataLoadedCallbackFunction != nil {
-                                DispatchQueue.main.async(execute: {
-                                    dataLoadedCallbackFunction!()
-                                })
+                            loadedCount += 1
+                            if loadedCount == items.count {
+                                if dataLoadedCallbackFunction != nil {
+                                    DispatchQueue.main.async(execute: {
+                                        dataLoadedCallbackFunction!()
+                                    })
+                                }
                             }
                         }
                         
@@ -154,8 +165,18 @@ class Networking {
     }
     
     func getAllCharactersInComic(items: [Item], dataLoadedCallbackFunction: (() -> Void)?) {
+        if items.count == 0 {
+            
+         if dataLoadedCallbackFunction != nil {
+            DispatchQueue.main.async(execute: {
+                dataLoadedCallbackFunction!()
+            })
+        }
+        }
+        var loadedCount = 0
         for item in items {
             let urlString = self.createURL(endpoint: item.resourceURI)
+            
             if let url = NSURL(string: urlString) {
                 var request = URLRequest(url: url as URL)
                 request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
@@ -169,14 +190,17 @@ class Networking {
                     do {
                         if let characterObject = try? JSONDecoder().decode(ComicCharacter.self, from: data) {
                             if characterObject.data.results.count > 0 {
-                                let path = characterObject.data.results[0].thumbnail.path + "." + characterObject.data.results[0].thumbnail.thumbnailExtension.rawValue
-                                self.comicCharactersDict[characterObject.data.results[0].name] = path
+                                //let path = characterObject.data.results[0].thumbnail.path + "." + characterObject.data.results[0].thumbnail.thumbnailExtension.rawValue
+                                self.comicCharactersArray.append(characterObject.data.results[0])
+                                
                             }
-                            
-                            if dataLoadedCallbackFunction != nil {
-                                DispatchQueue.main.async(execute: {
-                                    dataLoadedCallbackFunction!()
-                                })
+                            loadedCount += 1
+                            if loadedCount == items.count {
+                                if dataLoadedCallbackFunction != nil {
+                                    DispatchQueue.main.async(execute: {
+                                        dataLoadedCallbackFunction!()
+                                    })
+                                }
                             }
                         }
                         

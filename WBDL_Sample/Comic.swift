@@ -17,7 +17,7 @@ struct Comic: Codable {
     let title: String
 //    let issueNumber: Int
 //    let variantDescription: VariantDescription
-//    let description: String?
+    let description: String?
 //    let modified: ModifiedUnion
 //    let isbn: Isbn
 //    let upc: String
@@ -33,9 +33,9 @@ struct Comic: Codable {
 //    let variants, collections: [Series]
 //    let collectedIssues: [JSONAny]
     //let dates: [DateElement]
-//    let prices: [Price]
+   // let prices: [Price]
     let thumbnail: Thumbnail
-//    let images: [Thumbnail]
+    let images: [Thumbnail]
    // let creators: Creators
     let characters: Characters
 //    let stories: Stories
@@ -43,7 +43,7 @@ struct Comic: Codable {
     
     enum CodingKeys: String, CodingKey {
         case digitalID = "digitalId"
-        case title, thumbnail, characters, id, series
+        case title, thumbnail, characters, id, series, description, images
         //case title, issueNumber, variantDescription, description, modified, isbn, upc, diamondCode, ean, issn, format, pageCount, textObjects, resourceURI, series, variants, collections, collectedIssues, dates, prices, thumbnail, images, creators, characters, stories, events
     }
 }

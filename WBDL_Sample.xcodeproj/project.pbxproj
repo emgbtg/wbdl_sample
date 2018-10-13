@@ -18,6 +18,7 @@
 		A53E4536216E3B0D0023ABE6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A53E4534216E3B0D0023ABE6 /* LaunchScreen.storyboard */; };
 		A53E4541216E3B0D0023ABE6 /* WBDL_SampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53E4540216E3B0D0023ABE6 /* WBDL_SampleTests.swift */; };
 		A53E454D216E3FA90023ABE6 /* Objective-CBridgingHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = A53E454C216E3FA90023ABE6 /* Objective-CBridgingHeader.m */; };
+		D798E29521725A110050D3D0 /* ComicDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D798E29421725A110050D3D0 /* ComicDetailsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +48,7 @@
 		A53E4542216E3B0D0023ABE6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A53E454B216E3FA80023ABE6 /* WBDL_Sample-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WBDL_Sample-Bridging-Header.h"; sourceTree = "<group>"; };
 		A53E454C216E3FA90023ABE6 /* Objective-CBridgingHeader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "Objective-CBridgingHeader.m"; sourceTree = "<group>"; };
+		D798E29421725A110050D3D0 /* ComicDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicDetailsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,6 +97,7 @@
 				A530483F216E7D780083384C /* Comic.swift */,
 				A5304843216FD8C50083384C /* Series.swift */,
 				A5304841216F80240083384C /* ComicListViewController.swift */,
+				D798E29421725A110050D3D0 /* ComicDetailsViewController.swift */,
 				A53E4532216E3B0D0023ABE6 /* Assets.xcassets */,
 				A53E4534216E3B0D0023ABE6 /* LaunchScreen.storyboard */,
 				A53E4537216E3B0D0023ABE6 /* Info.plist */,
@@ -221,6 +224,7 @@
 				A5304842216F80240083384C /* ComicListViewController.swift in Sources */,
 				A5304840216E7D780083384C /* Comic.swift in Sources */,
 				A53E452C216E3B0A0023ABE6 /* AppDelegate.swift in Sources */,
+				D798E29521725A110050D3D0 /* ComicDetailsViewController.swift in Sources */,
 				A530483E216E72EA0083384C /* Networking.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
