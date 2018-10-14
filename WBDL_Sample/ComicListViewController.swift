@@ -23,7 +23,7 @@ class ComicListViewController: UIViewController, UICollectionViewDelegate, UICol
     @IBOutlet weak var searchTextField: UITextField!
     let networking = Networking()
     var selectedComic: Comic!
-     var loadedCount = 0
+    var loadedCount = 0
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -31,7 +31,7 @@ class ComicListViewController: UIViewController, UICollectionViewDelegate, UICol
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.contentInset = UIEdgeInsets(top: 23, left: 16, bottom: 10, right: 16)
-
+        
         networking.getComics(dataLoadedCallbackFunction: dataLoaded)
     }
     func dataLoaded() {
@@ -60,9 +60,7 @@ class ComicListViewController: UIViewController, UICollectionViewDelegate, UICol
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath){
         selectedComic = networking.comics[indexPath.row]
         networking.getComicDetails(comic: selectedComic, dataLoadedCallbackFunction: detailLoaded)
-        if selectedComic.characters.items.count > 0 {
-            networking.getAllCharactersInComic(items: selectedComic.characters.items , dataLoadedCallbackFunction: detailLoaded)
-        }
+        networking.getAllCharactersInComic(items: selectedComic.characters.items , dataLoadedCallbackFunction: detailLoaded)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -70,24 +68,18 @@ class ComicListViewController: UIViewController, UICollectionViewDelegate, UICol
         detailVC.characters = self.networking.comicCharactersArray
         detailVC.comicsInSeriesDict = self.networking.seriesComicsDict
         detailVC.comic = self.selectedComic
-        //detailVC.venueDetails = networking.venueDetail
     }
     func detailLoaded() {
-        //check if character/series == 0
-       loadedCount += 1
-        if loadedCount == 2 {
-            loadedCount = 0
-            performSegue(withIdentifier: "toDetail", sender: self)
-        }
+        performSegue(withIdentifier: "toDetail", sender: self)
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
         textField.resignFirstResponder()
-
+        
         return true
     }
-
+    
 }
 
 // extension to load images from url into an imageview

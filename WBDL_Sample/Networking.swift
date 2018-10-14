@@ -18,6 +18,7 @@ class Networking {
     var seriesComicsDict: [String:String] = [:]
     var comicCharactersArray: [CharacterInfo] = []
     var totalCount: Int!
+    var loadedCount = 0
     
     func getComics( dataLoadedCallbackFunction: (() -> Void)?) {
         let urlString = createURL(endpoint: "https://gateway.marvel.com/v1/public/comics") + "&dateDescriptor=thisMonth"
@@ -81,13 +82,6 @@ class Networking {
                         if seriesObject.data.seriesResults[0].comics.items.count > 0 {
                             self.getAllComicsInSeries(items: seriesObject.data.seriesResults[0].comics.items, dataLoadedCallbackFunction: dataLoadedCallbackFunction)
                         }
-                        
-                        
-                        //                        if dataLoadedCallbackFunction != nil {
-                        //                            DispatchQueue.main.async(execute: {
-                        //                                dataLoadedCallbackFunction!()
-                        //                            })
-                        //                        }
                     }
                     
                 }
@@ -118,11 +112,8 @@ class Networking {
     func getAllComicsInSeries(items: [Item], dataLoadedCallbackFunction: (() -> Void)?) {
         self.seriesComicsDict = [:]
         if items.count == 0 {
-            if dataLoadedCallbackFunction != nil {
-                DispatchQueue.main.async(execute: {
-                    dataLoadedCallbackFunction!()
-                })
-            }
+
+            loadController(dataLoadedCallbackFunction: dataLoadedCallbackFunction)
         }
         var loadedCount = 0
         for item in items {
@@ -146,11 +137,7 @@ class Networking {
                             }
                             loadedCount += 1
                             if loadedCount == items.count {
-                                if dataLoadedCallbackFunction != nil {
-                                    DispatchQueue.main.async(execute: {
-                                        dataLoadedCallbackFunction!()
-                                    })
-                                }
+                                self.loadController(dataLoadedCallbackFunction: dataLoadedCallbackFunction)
                             }
                         }
                         
@@ -166,12 +153,7 @@ class Networking {
     
     func getAllCharactersInComic(items: [Item], dataLoadedCallbackFunction: (() -> Void)?) {
         if items.count == 0 {
-            
-         if dataLoadedCallbackFunction != nil {
-            DispatchQueue.main.async(execute: {
-                dataLoadedCallbackFunction!()
-            })
-        }
+            loadController(dataLoadedCallbackFunction: dataLoadedCallbackFunction)
         }
         var loadedCount = 0
         for item in items {
@@ -190,17 +172,11 @@ class Networking {
                     do {
                         if let characterObject = try? JSONDecoder().decode(ComicCharacter.self, from: data) {
                             if characterObject.data.results.count > 0 {
-                                //let path = characterObject.data.results[0].thumbnail.path + "." + characterObject.data.results[0].thumbnail.thumbnailExtension.rawValue
                                 self.comicCharactersArray.append(characterObject.data.results[0])
-                                
                             }
                             loadedCount += 1
                             if loadedCount == items.count {
-                                if dataLoadedCallbackFunction != nil {
-                                    DispatchQueue.main.async(execute: {
-                                        dataLoadedCallbackFunction!()
-                                    })
-                                }
+                                self.loadController(dataLoadedCallbackFunction: dataLoadedCallbackFunction)
                             }
                         }
                         
@@ -209,6 +185,19 @@ class Networking {
                 task.resume()
                 
                 //}
+            }
+        }
+    }
+    
+    func loadController( dataLoadedCallbackFunction: (() -> Void)?) {
+        loadedCount += 1
+        if loadedCount == 2 {
+            if dataLoadedCallbackFunction != nil {
+                loadedCount = 0
+                DispatchQueue.main.async(execute: {
+                    dataLoadedCallbackFunction!()
+                    
+                })
             }
         }
     }

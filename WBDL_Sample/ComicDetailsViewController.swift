@@ -40,7 +40,7 @@ class ComicDetailsViewController: UIViewController, UICollectionViewDelegate, UI
         comicSeriesCollectionView.delegate = self
         comicSeriesCollectionView.dataSource = self
         let flowLayout = UICollectionViewFlowLayout()
-        flowLayout.itemSize = CGSize(width: UIScreen.main.bounds.width/2-10, height: 190)
+        flowLayout.itemSize = CGSize(width: UIScreen.main.bounds.width/2-10, height: 240)
         flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
         flowLayout.scrollDirection = UICollectionView.ScrollDirection.horizontal
         flowLayout.minimumInteritemSpacing = 0.0
