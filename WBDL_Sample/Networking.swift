@@ -155,6 +155,7 @@ class Networking {
         if items.count == 0 {
             loadController(dataLoadedCallbackFunction: dataLoadedCallbackFunction)
         }
+        comicCharactersArray = []
         var loadedCount = 0
         for item in items {
             let urlString = self.createURL(endpoint: item.resourceURI)
