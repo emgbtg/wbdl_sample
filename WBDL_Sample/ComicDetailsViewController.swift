@@ -22,6 +22,11 @@ class ComicDetailsViewController: UIViewController, UICollectionViewDelegate, UI
     
     @IBOutlet weak var charactersCollectionView: UICollectionView!
     @IBOutlet weak var comicSeriesCollectionView: UICollectionView!
+    
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var priceLabel: UILabel!
+    @IBOutlet weak var pageCountLabel: UILabel!
+    
     var comicsInSeriesDict: [String:String] = [:]
     var characters: [CharacterInfo]!
     var comic: Comic!
@@ -30,6 +35,10 @@ class ComicDetailsViewController: UIViewController, UICollectionViewDelegate, UI
     override func viewDidLoad() {
         super.viewDidLoad()
         imageView.imageFromServerURL(urlString: comic.thumbnail.path + "." + comic.thumbnail.thumbnailExtension.rawValue)
+        titleLabel.text = comic.title
+        priceLabel.text = String(comic.prices[0].price) ?? ""
+        pageCountLabel.text = String(comic.pageCount) ?? ""
+        
         descriptionLabel.adjustsFontSizeToFitWidth = true
         descriptionLabel.text = comic.description ?? "No Description"
         comicSeriesTitleLabel.text = comic.series.name
