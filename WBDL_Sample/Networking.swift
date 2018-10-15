@@ -112,7 +112,6 @@ class Networking {
     func getAllComicsInSeries(items: [Item], dataLoadedCallbackFunction: (() -> Void)?) {
         self.seriesComicsDict = [:]
         if items.count == 0 {
-
             loadController(dataLoadedCallbackFunction: dataLoadedCallbackFunction)
         }
         var loadedCount = 0

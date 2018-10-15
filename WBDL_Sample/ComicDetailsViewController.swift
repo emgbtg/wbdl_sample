@@ -12,6 +12,12 @@ class SeriesCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
 }
+class ComicCollectionViewCell: UICollectionViewCell {
+    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var titleLabel: UILabel!
+    
+    
+}
 
 class ComicDetailsViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     @IBOutlet weak var scrollView: UIScrollView!
@@ -35,9 +41,11 @@ class ComicDetailsViewController: UIViewController, UICollectionViewDelegate, UI
     override func viewDidLoad() {
         super.viewDidLoad()
         imageView.imageFromServerURL(urlString: comic.thumbnail.path + "." + comic.thumbnail.thumbnailExtension.rawValue)
+        titleLabel.adjustsFontSizeToFitWidth = true
+        
         titleLabel.text = comic.title
-        priceLabel.text = String(comic.prices[0].price) ?? ""
-        pageCountLabel.text = String(comic.pageCount) ?? ""
+        priceLabel.text = "Price: $" + String(comic.prices[0].price)
+        pageCountLabel.text = "Pages: " + String(comic.pageCount)
         
         descriptionLabel.adjustsFontSizeToFitWidth = true
         descriptionLabel.text = comic.description ?? "No Description"
@@ -57,14 +65,21 @@ class ComicDetailsViewController: UIViewController, UICollectionViewDelegate, UI
         flowLayout.scrollDirection = UICollectionView.ScrollDirection.horizontal
         flowLayout.minimumInteritemSpacing = 0.0
         comicSeriesCollectionView.collectionViewLayout = flowLayout
-        charactersCollectionView.collectionViewLayout = flowLayout
+        
+        let flowLayout2 = UICollectionViewFlowLayout()
+        flowLayout.itemSize = CGSize(width: 118, height: 240)
+        flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
+        flowLayout.scrollDirection = UICollectionView.ScrollDirection.horizontal
+        flowLayout.minimumInteritemSpacing = 0.0
+        charactersCollectionView.collectionViewLayout = flowLayout2
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView.tag == 0 {
             return comicsInSeriesDict.count
-        } else {
+        } else if collectionView.tag == 1{
             return characters.count
         }
+        return 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -78,7 +93,7 @@ class ComicDetailsViewController: UIViewController, UICollectionViewDelegate, UI
             
             return cell
         } else {
-             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "charactersCell", for: indexPath as IndexPath) as! SeriesCollectionViewCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "charactersCell", for: indexPath as IndexPath) as! ComicCollectionViewCell
             cell.titleLabel.adjustsFontSizeToFitWidth = true
             cell.titleLabel.text = characters[indexPath.row].name
             
@@ -94,11 +109,7 @@ class ComicDetailsViewController: UIViewController, UICollectionViewDelegate, UI
         return CGSize(width: itemSize, height: itemSize)
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath){
-        //        selectedComic = networking.comics[indexPath.row]
-        //        networking.getComicDetails(comic: selectedComic, dataLoadedCallbackFunction: detailLoaded)
-        //        if selectedComic.characters.items.count > 0 {
-        //            networking.getAllCharactersInComic(items: selectedComic.characters.items , dataLoadedCallbackFunction: detailLoaded)
-        //        }
+
     }
     
     

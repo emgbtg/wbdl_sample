@@ -61,6 +61,11 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="6iZ-6d-I2c">
+                                <rect key="frame" x="169" y="200" width="37" height="37"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="color" red="0.36049138479999998" green="0.76878238340000005" blue="0.30312273449999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -78,6 +83,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="d4g-Le-ed6"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="6iZ-6d-I2c" id="T3F-nZ-r2A"/>
                         <outlet property="collectionView" destination="Ihg-Ta-Aa9" id="rxx-GN-0Y5"/>
                         <outlet property="searchTextField" destination="Xzl-HV-aYZ" id="fEb-R9-pVj"/>
                         <segue destination="CaE-n1-FEJ" kind="show" identifier="toDetail" id="dPM-TH-fHk"/>
@@ -169,7 +175,7 @@
                                                 </cells>
                                             </collectionView>
                                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" tag="1" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ymk-Es-mqJ">
-                                                <rect key="frame" x="0.0" y="830" width="375" height="275"/>
+                                                <rect key="frame" x="0.0" y="830" width="375" height="274"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="saW-4a-bWf">
@@ -179,7 +185,7 @@
                                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                 </collectionViewFlowLayout>
                                                 <cells>
-                                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="charactersCell" id="NZW-CM-EXX" customClass="SeriesCollectionViewCell" customModule="WBDL_Sample" customModuleProvider="target">
+                                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="charactersCell" id="NZW-CM-EXX" customClass="ComicCollectionViewCell" customModule="WBDL_Sample" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="0.0" width="118" height="235"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
@@ -192,7 +198,7 @@
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qzf-X4-Jgc">
                                                                     <rect key="frame" x="0.0" y="153" width="118" height="82"/>
                                                                     <constraints>
-                                                                        <constraint firstAttribute="height" constant="82" id="OHg-Ty-7K2"/>
+                                                                        <constraint firstAttribute="height" constant="82" id="LF3-Lr-t8t"/>
                                                                     </constraints>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                     <nil key="textColor"/>
@@ -201,17 +207,17 @@
                                                             </subviews>
                                                         </view>
                                                         <constraints>
-                                                            <constraint firstAttribute="bottom" secondItem="qzf-X4-Jgc" secondAttribute="bottom" id="DDh-2w-ewR"/>
-                                                            <constraint firstItem="qzf-X4-Jgc" firstAttribute="top" secondItem="lGY-U4-VfF" secondAttribute="bottom" constant="8" symbolic="YES" id="SoR-qd-1oz"/>
-                                                            <constraint firstItem="lGY-U4-VfF" firstAttribute="top" secondItem="NZW-CM-EXX" secondAttribute="top" id="Ytm-Ut-Nzh"/>
-                                                            <constraint firstItem="lGY-U4-VfF" firstAttribute="leading" secondItem="NZW-CM-EXX" secondAttribute="leading" id="Z01-Qp-knh"/>
-                                                            <constraint firstItem="lGY-U4-VfF" firstAttribute="leading" secondItem="qzf-X4-Jgc" secondAttribute="leading" id="ocz-6c-SCR"/>
-                                                            <constraint firstItem="lGY-U4-VfF" firstAttribute="trailing" secondItem="qzf-X4-Jgc" secondAttribute="trailing" id="sc7-go-UJw"/>
-                                                            <constraint firstAttribute="trailing" secondItem="lGY-U4-VfF" secondAttribute="trailing" id="yKg-zg-dOJ"/>
+                                                            <constraint firstAttribute="trailing" secondItem="lGY-U4-VfF" secondAttribute="trailing" id="17R-JO-Fca"/>
+                                                            <constraint firstItem="qzf-X4-Jgc" firstAttribute="top" secondItem="lGY-U4-VfF" secondAttribute="bottom" constant="8" symbolic="YES" id="5Dy-OA-HxE"/>
+                                                            <constraint firstItem="lGY-U4-VfF" firstAttribute="leading" secondItem="NZW-CM-EXX" secondAttribute="leading" id="LAq-TC-8v3"/>
+                                                            <constraint firstItem="lGY-U4-VfF" firstAttribute="leading" secondItem="qzf-X4-Jgc" secondAttribute="leading" id="ZRe-K9-dMb"/>
+                                                            <constraint firstItem="lGY-U4-VfF" firstAttribute="trailing" secondItem="qzf-X4-Jgc" secondAttribute="trailing" id="f4f-ff-AGu"/>
+                                                            <constraint firstItem="lGY-U4-VfF" firstAttribute="top" secondItem="NZW-CM-EXX" secondAttribute="top" id="odb-D0-ATZ"/>
+                                                            <constraint firstAttribute="bottom" secondItem="qzf-X4-Jgc" secondAttribute="bottom" id="y3B-R9-z1h"/>
                                                         </constraints>
                                                         <connections>
-                                                            <outlet property="imageView" destination="lGY-U4-VfF" id="3IU-yv-rmK"/>
-                                                            <outlet property="titleLabel" destination="qzf-X4-Jgc" id="hSu-cF-GmY"/>
+                                                            <outlet property="imageView" destination="lGY-U4-VfF" id="QoS-jb-RpP"/>
+                                                            <outlet property="titleLabel" destination="qzf-X4-Jgc" id="jxT-ba-etq"/>
                                                         </connections>
                                                     </collectionViewCell>
                                                 </cells>

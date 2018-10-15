@@ -19,6 +19,7 @@ class CollectionViewCell: UICollectionViewCell {
 class ComicListViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UITextFieldDelegate {
     
     
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var searchTextField: UITextField!
     let networking = Networking()
@@ -26,7 +27,7 @@ class ComicListViewController: UIViewController, UICollectionViewDelegate, UICol
     var loadedCount = 0
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        activityIndicator.startAnimating()
         // set up collectionview
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -35,7 +36,10 @@ class ComicListViewController: UIViewController, UICollectionViewDelegate, UICol
         networking.getComics(dataLoadedCallbackFunction: dataLoaded)
     }
     func dataLoaded() {
+        activityIndicator.stopAnimating()
+        activityIndicator.isHidden = true
         collectionView.reloadData()
+        collectionView.collectionViewLayout.invalidateLayout()
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -58,6 +62,9 @@ class ComicListViewController: UIViewController, UICollectionViewDelegate, UICol
         return CGSize(width: itemSize, height: itemSize)
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath){
+        activityIndicator.isHidden = false
+        activityIndicator.startAnimating()
+        
         selectedComic = networking.comics[indexPath.row]
         networking.getComicDetails(comic: selectedComic, dataLoadedCallbackFunction: detailLoaded)
         networking.getAllCharactersInComic(items: selectedComic.characters.items , dataLoadedCallbackFunction: detailLoaded)
@@ -70,6 +77,9 @@ class ComicListViewController: UIViewController, UICollectionViewDelegate, UICol
         detailVC.comic = self.selectedComic
     }
     func detailLoaded() {
+        activityIndicator.isHidden = true
+        activityIndicator.stopAnimating()
+        
         performSegue(withIdentifier: "toDetail", sender: self)
     }
     
