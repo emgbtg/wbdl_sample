@@ -11,6 +11,8 @@ import UIKit
 class SeriesCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
+    
+    @IBOutlet weak var containerView: UIView!
 }
 class ComicCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var imageView: UIImageView!
@@ -41,6 +43,30 @@ class ComicDetailsViewController: UIViewController, UICollectionViewDelegate, UI
     var seriesKeys: [String] = []
     private var cache = [UICollectionViewLayoutAttributes]()
     //var series:
+    
+    override func viewWillAppear(_ animated: Bool) {
+        var newHeight = containerView.frame.size.height
+        if characters.count == 0 || comicsInSeriesDict.count <= 1 {
+            if characters.count == 0 {
+                newHeight -= (charactersCollectionView.frame.size.height + characterSectionLabel.frame.size.height)
+                characterSectionLabel.isHidden = true
+                charactersCollectionView.isHidden = true
+            }
+            if comicsInSeriesDict.count <= 1 {
+                newHeight -= comicSeriesTitleLabel.frame.size.height + comicSeriesCollectionView.frame.size.height
+                comicSeriesCollectionView.isHidden = true
+                comicSeriesTitleLabel.isHidden = true
+                if characters.count > 0 {
+                    characterSectionLabel.frame.origin.y = descriptionLabel.frame.origin.y + descriptionLabel.frame.size.height + 20
+                    charactersCollectionView.frame.origin.y = characterSectionLabel.frame.origin.y + characterSectionLabel.frame.size.height + 20
+                }
+            }
+            containerViewHeightConstraint.constant = newHeight
+            
+        } else {
+            containerViewHeightConstraint.constant = 1200
+        }
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         imageView.imageFromServerURL(urlString: comic.thumbnail.path + "." + comic.thumbnail.thumbnailExtension.rawValue)
@@ -78,23 +104,7 @@ class ComicDetailsViewController: UIViewController, UICollectionViewDelegate, UI
         charactersCollectionView.collectionViewLayout = flowLayout2
 
         // Data is often incomplete in this API. This logic will adjust the layout accordingly.
-        var newHeight = containerView.frame.size.height
-        if characters.count == 0 || comicsInSeriesDict.count <= 1 {
-            if characters.count == 0 {
-                newHeight -= (charactersCollectionView.frame.size.height + characterSectionLabel.frame.size.height)
-            }
-            if comicsInSeriesDict.count <= 1 {
-                newHeight -= comicSeriesTitleLabel.frame.size.height + comicSeriesCollectionView.frame.size.height
-                if characters.count > 0 {
-                    characterSectionLabel.frame.origin.y = descriptionLabel.frame.origin.y + descriptionLabel.frame.size.height + 20
-                    charactersCollectionView.frame.origin.y = characterSectionLabel.frame.origin.y + characterSectionLabel.frame.size.height + 20
-                }
-            }
-            containerViewHeightConstraint.constant = newHeight
-            
-        } else {
-            containerViewHeightConstraint.constant = 1200
-        }
+        
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView.tag == 0 {
@@ -109,6 +119,9 @@ class ComicDetailsViewController: UIViewController, UICollectionViewDelegate, UI
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView.tag == 0 {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "seriesCell", for: indexPath as IndexPath) as! SeriesCollectionViewCell
+            cell.containerView.layer.cornerRadius = 8
+            cell.containerView.layer.masksToBounds = true
+            
             cell.titleLabel.adjustsFontSizeToFitWidth = true
             cell.titleLabel.text = seriesKeys[indexPath.row]
             
