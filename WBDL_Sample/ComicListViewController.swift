@@ -16,9 +16,11 @@ class CollectionViewCell: UICollectionViewCell {
     
 }
 
-class ComicListViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UITextFieldDelegate {
+class ComicListViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UITextFieldDelegate, UIScrollViewDelegate {
     
     
+    
+    @IBOutlet weak var parallaxScrollview: UIScrollView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var searchTextField: UITextField!
@@ -36,6 +38,9 @@ class ComicListViewController: UIViewController, UICollectionViewDelegate, UICol
         networking.getComics(dataLoadedCallbackFunction: dataLoaded)
         
         searchTextField.delegate = self
+        parallaxScrollview.isScrollEnabled = true
+        parallaxScrollview.contentSize = CGSize(width: self.view.frame.size.width, height: 3000)
+        
     }
     func dataLoaded() {
         activityIndicator.stopAnimating()
@@ -50,19 +55,7 @@ class ComicListViewController: UIViewController, UICollectionViewDelegate, UICol
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath as IndexPath) as! CollectionViewCell
-//        cell.contentView.layer.cornerRadius = 2.0
-//        cell.contentView.layer.borderWidth = 1.0
-//        cell.contentView.layer.borderColor = UIColor.clear.cgColor
-//        cell.contentView.layer.masksToBounds = true
-//
-//        cell.layer.shadowColor = UIColor.black.cgColor
-//        cell.layer.shadowOffset = CGSize(width: 0, height: 2.0)
-//        cell.layer.shadowRadius = 2.0
-//        cell.layer.shadowOpacity = 0.5
-//        cell.layer.masksToBounds = false
-//        cell.layer.shadowPath = UIBezierPath(roundedRect: cell.bounds, cornerRadius: cell.contentView.layer.cornerRadius).cgPath
-//
-//        cell.layer.backgroundColor = UIColor.white.cgColor
+        
         cell.containerView.layer.cornerRadius = 8
         cell.containerView.layer.masksToBounds = true
 
@@ -113,6 +106,13 @@ class ComicListViewController: UIViewController, UICollectionViewDelegate, UICol
         
         return true
     }
+    
+    // controlls parallax scrolling
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
+        parallaxScrollview.contentOffset.y = collectionView.contentOffset.y * 0.1
+        print(parallaxScrollview.contentOffset.y)
+    }
     func searchLoaded() {
         activityIndicator.isHidden = true
         activityIndicator.stopAnimating()
@@ -159,5 +159,10 @@ extension CALayer {
             let rect = bounds.insetBy(dx: dx, dy: dx)
             shadowPath = UIBezierPath(rect: rect).cgPath
         }
+    }
+}
+extension UIScrollView {
+    func updateContentView() {
+        contentSize.height = subviews.sorted(by: { $0.frame.maxY < $1.frame.maxY }).last?.frame.maxY ?? contentSize.height
     }
 }
