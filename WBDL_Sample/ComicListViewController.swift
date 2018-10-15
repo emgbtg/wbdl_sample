@@ -12,6 +12,7 @@ class CollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var label: UILabel!
+    @IBOutlet weak var containerView: UIView!
     
 }
 
@@ -31,7 +32,7 @@ class ComicListViewController: UIViewController, UICollectionViewDelegate, UICol
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.contentInset = UIEdgeInsets(top: 23, left: 16, bottom: 10, right: 16)
-        
+
         networking.getComics(dataLoadedCallbackFunction: dataLoaded)
         
         searchTextField.delegate = self
@@ -53,15 +54,17 @@ class ComicListViewController: UIViewController, UICollectionViewDelegate, UICol
 //        cell.contentView.layer.borderWidth = 1.0
 //        cell.contentView.layer.borderColor = UIColor.clear.cgColor
 //        cell.contentView.layer.masksToBounds = true
-//        
+//
 //        cell.layer.shadowColor = UIColor.black.cgColor
 //        cell.layer.shadowOffset = CGSize(width: 0, height: 2.0)
 //        cell.layer.shadowRadius = 2.0
 //        cell.layer.shadowOpacity = 0.5
 //        cell.layer.masksToBounds = false
 //        cell.layer.shadowPath = UIBezierPath(roundedRect: cell.bounds, cornerRadius: cell.contentView.layer.cornerRadius).cgPath
-//        
+//
 //        cell.layer.backgroundColor = UIColor.white.cgColor
+        cell.containerView.layer.cornerRadius = 8
+        cell.containerView.layer.masksToBounds = true
 
         cell.label.adjustsFontSizeToFitWidth = true
         cell.label.text = self.networking.comics[indexPath.row].title

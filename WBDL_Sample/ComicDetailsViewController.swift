@@ -69,25 +69,20 @@ class ComicDetailsViewController: UIViewController, UICollectionViewDelegate, UI
         flowLayout.minimumInteritemSpacing = 0.0
         comicSeriesCollectionView.collectionViewLayout = flowLayout
         
+        // need a seperate UICollectionViewFlowLayout for the second collection view to avoid layout issues.
         let flowLayout2 = UICollectionViewFlowLayout()
         flowLayout2.itemSize = CGSize(width: UIScreen.main.bounds.width/2-10, height: 240)
         flowLayout2.sectionInset = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
         flowLayout2.scrollDirection = UICollectionView.ScrollDirection.horizontal
         flowLayout2.minimumInteritemSpacing = 0.0
         charactersCollectionView.collectionViewLayout = flowLayout2
-        
-        if comicsInSeriesDict.count <= 1 {
-            self.view.frame.size.height -= comicSeriesTitleLabel.frame.size.height + comicSeriesCollectionView.frame.size.height
-            comicSeriesTitleLabel.removeFromSuperview()
-            comicSeriesCollectionView.removeFromSuperview()
-            
-        }
+
+        // Data is often incomplete in this API. This logic will adjust the layout accordingly.
         var newHeight = containerView.frame.size.height
         if characters.count == 0 || comicsInSeriesDict.count <= 1 {
             if characters.count == 0 {
                 newHeight -= (charactersCollectionView.frame.size.height + characterSectionLabel.frame.size.height)
             }
-            
             if comicsInSeriesDict.count <= 1 {
                 newHeight -= comicSeriesTitleLabel.frame.size.height + comicSeriesCollectionView.frame.size.height
                 if characters.count > 0 {
@@ -140,17 +135,5 @@ class ComicDetailsViewController: UIViewController, UICollectionViewDelegate, UI
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath){
 
     }
-
-    
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
     
 }
