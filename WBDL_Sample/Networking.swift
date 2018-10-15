@@ -20,8 +20,13 @@ class Networking {
     var totalCount: Int!
     var loadedCount = 0
     
-    func getComics( dataLoadedCallbackFunction: (() -> Void)?) {
-        let urlString = createURL(endpoint: "https://gateway.marvel.com/v1/public/comics") + "&dateDescriptor=thisMonth"
+    func getComics(searchQuerry: String = "", dataLoadedCallbackFunction: (() -> Void)?) {
+        var urlString = ""
+        if searchQuerry != "" {
+            urlString = createURL(endpoint: "https://gateway.marvel.com/v1/public/comics") + "&dateDescriptor=thisMonth&titleStartsWith=" + searchQuerry
+        } else {
+             urlString = createURL(endpoint: "https://gateway.marvel.com/v1/public/comics") + "&dateDescriptor=thisMonth"
+        }
         if let url = NSURL(string: urlString) {
             var request = URLRequest(url: url as URL)
             request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
@@ -111,12 +116,16 @@ class Networking {
     
     func getAllComicsInSeries(items: [Item], dataLoadedCallbackFunction: (() -> Void)?) {
         self.seriesComicsDict = [:]
+        var loadedCount = 0
         if items.count == 0 {
             loadController(dataLoadedCallbackFunction: dataLoadedCallbackFunction)
         }
-        var loadedCount = 0
-        for item in items {
-            let urlString = self.createURL(endpoint: item.resourceURI)
+        var comics = items
+//        if items.count >  {
+//            comics = Array(items.prefix(2))
+//        }
+        for comic in comics {
+            let urlString = self.createURL(endpoint: comic.resourceURI)
             
             if let url = NSURL(string: urlString) {
                 var request = URLRequest(url: url as URL)
@@ -135,7 +144,7 @@ class Networking {
                                 self.seriesComicsDict[comicObject.data.results[0].title] = path
                             }
                             loadedCount += 1
-                            if loadedCount == items.count {
+                            if loadedCount == comics.count {
                                 self.loadController(dataLoadedCallbackFunction: dataLoadedCallbackFunction)
                             }
                         }
@@ -143,8 +152,6 @@ class Networking {
                     }
                 }
                 task.resume()
-                
-                //}
             }
         }
         

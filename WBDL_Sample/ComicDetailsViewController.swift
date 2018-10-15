@@ -25,6 +25,7 @@ class ComicDetailsViewController: UIViewController, UICollectionViewDelegate, UI
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var comicSeriesTitleLabel: UILabel!
+    @IBOutlet weak var characterSectionLabel: UILabel!
     
     @IBOutlet weak var charactersCollectionView: UICollectionView!
     @IBOutlet weak var comicSeriesCollectionView: UICollectionView!
@@ -33,10 +34,12 @@ class ComicDetailsViewController: UIViewController, UICollectionViewDelegate, UI
     @IBOutlet weak var priceLabel: UILabel!
     @IBOutlet weak var pageCountLabel: UILabel!
     
+    @IBOutlet weak var containerViewHeightConstraint: NSLayoutConstraint!
     var comicsInSeriesDict: [String:String] = [:]
     var characters: [CharacterInfo]!
     var comic: Comic!
     var seriesKeys: [String] = []
+    private var cache = [UICollectionViewLayoutAttributes]()
     //var series:
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,11 +70,36 @@ class ComicDetailsViewController: UIViewController, UICollectionViewDelegate, UI
         comicSeriesCollectionView.collectionViewLayout = flowLayout
         
         let flowLayout2 = UICollectionViewFlowLayout()
-        flowLayout.itemSize = CGSize(width: 118, height: 240)
-        flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
-        flowLayout.scrollDirection = UICollectionView.ScrollDirection.horizontal
-        flowLayout.minimumInteritemSpacing = 0.0
+        flowLayout2.itemSize = CGSize(width: UIScreen.main.bounds.width/2-10, height: 240)
+        flowLayout2.sectionInset = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
+        flowLayout2.scrollDirection = UICollectionView.ScrollDirection.horizontal
+        flowLayout2.minimumInteritemSpacing = 0.0
         charactersCollectionView.collectionViewLayout = flowLayout2
+        
+        if comicsInSeriesDict.count <= 1 {
+            self.view.frame.size.height -= comicSeriesTitleLabel.frame.size.height + comicSeriesCollectionView.frame.size.height
+            comicSeriesTitleLabel.removeFromSuperview()
+            comicSeriesCollectionView.removeFromSuperview()
+            
+        }
+        var newHeight = containerView.frame.size.height
+        if characters.count == 0 || comicsInSeriesDict.count <= 1 {
+            if characters.count == 0 {
+                newHeight -= (charactersCollectionView.frame.size.height + characterSectionLabel.frame.size.height)
+            }
+            
+            if comicsInSeriesDict.count <= 1 {
+                newHeight -= comicSeriesTitleLabel.frame.size.height + comicSeriesCollectionView.frame.size.height
+                if characters.count > 0 {
+                    characterSectionLabel.frame.origin.y = descriptionLabel.frame.origin.y + descriptionLabel.frame.size.height + 20
+                    charactersCollectionView.frame.origin.y = characterSectionLabel.frame.origin.y + characterSectionLabel.frame.size.height + 20
+                }
+            }
+            containerViewHeightConstraint.constant = newHeight
+            
+        } else {
+            containerViewHeightConstraint.constant = 1200
+        }
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView.tag == 0 {
@@ -81,6 +109,7 @@ class ComicDetailsViewController: UIViewController, UICollectionViewDelegate, UI
         }
         return 0
     }
+
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView.tag == 0 {
@@ -111,6 +140,7 @@ class ComicDetailsViewController: UIViewController, UICollectionViewDelegate, UI
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath){
 
     }
+
     
     
     /*

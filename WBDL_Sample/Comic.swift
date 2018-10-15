@@ -151,13 +151,13 @@ enum Isbn: String, Codable {
 }
 
 struct Price: Codable {
-    let type: PriceType
+    let type: String
     let price: Double
 }
 
-enum PriceType: String, Codable {
-    case printPrice = "printPrice"
-}
+//enum PriceType: String, Codable {
+//    ca
+//}
 
 struct Stories: Codable {
     let available: Int

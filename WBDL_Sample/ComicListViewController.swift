@@ -13,7 +13,6 @@ class CollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var label: UILabel!
     
-    
 }
 
 class ComicListViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UITextFieldDelegate {
@@ -34,6 +33,8 @@ class ComicListViewController: UIViewController, UICollectionViewDelegate, UICol
         collectionView.contentInset = UIEdgeInsets(top: 23, left: 16, bottom: 10, right: 16)
         
         networking.getComics(dataLoadedCallbackFunction: dataLoaded)
+        
+        searchTextField.delegate = self
     }
     func dataLoaded() {
         activityIndicator.stopAnimating()
@@ -48,6 +49,20 @@ class ComicListViewController: UIViewController, UICollectionViewDelegate, UICol
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath as IndexPath) as! CollectionViewCell
+//        cell.contentView.layer.cornerRadius = 2.0
+//        cell.contentView.layer.borderWidth = 1.0
+//        cell.contentView.layer.borderColor = UIColor.clear.cgColor
+//        cell.contentView.layer.masksToBounds = true
+//        
+//        cell.layer.shadowColor = UIColor.black.cgColor
+//        cell.layer.shadowOffset = CGSize(width: 0, height: 2.0)
+//        cell.layer.shadowRadius = 2.0
+//        cell.layer.shadowOpacity = 0.5
+//        cell.layer.masksToBounds = false
+//        cell.layer.shadowPath = UIBezierPath(roundedRect: cell.bounds, cornerRadius: cell.contentView.layer.cornerRadius).cgPath
+//        
+//        cell.layer.backgroundColor = UIColor.white.cgColor
+
         cell.label.adjustsFontSizeToFitWidth = true
         cell.label.text = self.networking.comics[indexPath.row].title
         
@@ -86,8 +101,20 @@ class ComicListViewController: UIViewController, UICollectionViewDelegate, UICol
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
         textField.resignFirstResponder()
+        if textField.text != "" {
+            activityIndicator.isHidden = false
+            activityIndicator.startAnimating()
+            
+            networking.getComics(searchQuerry: textField.text!, dataLoadedCallbackFunction: searchLoaded)
+        }
         
         return true
+    }
+    func searchLoaded() {
+        activityIndicator.isHidden = true
+        activityIndicator.stopAnimating()
+        
+        collectionView.reloadData()
     }
     
 }
@@ -109,3 +136,25 @@ extension UIImageView {
             
         }).resume()
     }}
+extension CALayer {
+    func applyShadow(
+        color: UIColor = .black,
+        alpha: Float = 0.1,
+        x: CGFloat = 0,
+        y: CGFloat = 2,
+        blur: CGFloat = 4,
+        spread: CGFloat = 1)
+    {
+        shadowColor = color.cgColor
+        shadowOpacity = alpha
+        shadowOffset = CGSize(width: x, height: y)
+        shadowRadius = blur / 2.0
+        if spread == 0 {
+            shadowPath = nil
+        } else {
+            let dx = -spread
+            let rect = bounds.insetBy(dx: dx, dy: dx)
+            shadowPath = UIBezierPath(rect: rect).cgPath
+        }
+    }
+}
