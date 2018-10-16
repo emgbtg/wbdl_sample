@@ -12,3 +12,5 @@ The first view presents a list of Marvel Comics from this month. The user is als
 ![Alt text](https://i.imgur.com/5H5tRBNl.jpg)
 
 After selecting a comic from the list view the user is presented with a detail view that gives information (when available) such as price, page count, description, other comics in series, and characters featured in the comic. 
+
+**Physical devices tested on: iPhone X**
