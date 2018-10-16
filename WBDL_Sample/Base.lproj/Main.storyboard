@@ -24,6 +24,9 @@
                                     <imageView userInteractionEnabled="NO" alpha="0.59999999999999998" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="marvel.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="faH-PC-lh8">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="971"/>
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="971" id="J3s-AR-rvY"/>
+                                        </constraints>
                                     </imageView>
                                 </subviews>
                                 <constraints>
@@ -211,7 +214,7 @@
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="82" id="LF3-Lr-t8t"/>
                                                                     </constraints>
-                                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                                     <color key="textColor" red="0.95294117649999999" green="0.83137254900000002" blue="0.01176470588" alpha="0.95571082750000003" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
@@ -292,20 +295,20 @@
                                                             <rect key="frame" x="0.0" y="0.0" width="128" height="282"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
-                                                                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1Sw-2D-KhZ">
+                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1Sw-2D-KhZ">
                                                                     <rect key="frame" x="0.0" y="0.0" width="124" height="273"/>
                                                                     <subviews>
-                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ISR-Ue-aId">
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ISR-Ue-aId">
                                                                             <rect key="frame" x="0.0" y="203" width="125" height="62"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="height" constant="62" id="Bqf-bV-Y5S"/>
                                                                                 <constraint firstAttribute="width" constant="125" id="qbM-dj-Abl"/>
                                                                             </constraints>
-                                                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                                                             <color key="textColor" red="0.92941176469999998" green="0.1137254902" blue="0.14117647059999999" alpha="0.95571082750000003" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
-                                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7RI-UP-VEg">
+                                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7RI-UP-VEg">
                                                                             <rect key="frame" x="0.0" y="0.0" width="124" height="187"/>
                                                                         </imageView>
                                                                     </subviews>

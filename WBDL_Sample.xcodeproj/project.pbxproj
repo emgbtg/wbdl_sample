@@ -19,6 +19,7 @@
 		A53E4541216E3B0D0023ABE6 /* WBDL_SampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53E4540216E3B0D0023ABE6 /* WBDL_SampleTests.swift */; };
 		A53E454D216E3FA90023ABE6 /* Objective-CBridgingHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = A53E454C216E3FA90023ABE6 /* Objective-CBridgingHeader.m */; };
 		A5BF4C1321752B8D0070CBA6 /* marvel.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A5BF4C1221752B8C0070CBA6 /* marvel.jpg */; };
+		D731C4D72175696500DE9C69 /* marvel_universe_icon_png.png in Resources */ = {isa = PBXBuildFile; fileRef = D731C4D62175696500DE9C69 /* marvel_universe_icon_png.png */; };
 		D798E29521725A110050D3D0 /* ComicDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D798E29421725A110050D3D0 /* ComicDetailsViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -50,6 +51,7 @@
 		A53E454B216E3FA80023ABE6 /* WBDL_Sample-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WBDL_Sample-Bridging-Header.h"; sourceTree = "<group>"; };
 		A53E454C216E3FA90023ABE6 /* Objective-CBridgingHeader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "Objective-CBridgingHeader.m"; sourceTree = "<group>"; };
 		A5BF4C1221752B8C0070CBA6 /* marvel.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = marvel.jpg; sourceTree = "<group>"; };
+		D731C4D62175696500DE9C69 /* marvel_universe_icon_png.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = marvel_universe_icon_png.png; sourceTree = "<group>"; };
 		D798E29421725A110050D3D0 /* ComicDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicDetailsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -102,6 +104,7 @@
 				D798E29421725A110050D3D0 /* ComicDetailsViewController.swift */,
 				A53E4532216E3B0D0023ABE6 /* Assets.xcassets */,
 				A5BF4C1221752B8C0070CBA6 /* marvel.jpg */,
+				D731C4D62175696500DE9C69 /* marvel_universe_icon_png.png */,
 				A53E4534216E3B0D0023ABE6 /* LaunchScreen.storyboard */,
 				A53E4537216E3B0D0023ABE6 /* Info.plist */,
 				A53E454C216E3FA90023ABE6 /* Objective-CBridgingHeader.m */,
@@ -204,6 +207,7 @@
 				A5BF4C1321752B8D0070CBA6 /* marvel.jpg in Resources */,
 				A53E4536216E3B0D0023ABE6 /* LaunchScreen.storyboard in Resources */,
 				A53E4533216E3B0D0023ABE6 /* Assets.xcassets in Resources */,
+				D731C4D72175696500DE9C69 /* marvel_universe_icon_png.png in Resources */,
 				A53E4531216E3B0A0023ABE6 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -390,7 +394,7 @@
 		A53E4546216E3B0D0023ABE6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = KU9E8D7SSZ;
@@ -412,7 +416,7 @@
 		A53E4547216E3B0D0023ABE6 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = KU9E8D7SSZ;

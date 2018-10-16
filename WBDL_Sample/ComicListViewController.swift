@@ -41,6 +41,9 @@ class ComicListViewController: UIViewController, UICollectionViewDelegate, UICol
         parallaxScrollview.isScrollEnabled = true
         parallaxScrollview.contentSize = CGSize(width: self.view.frame.size.width, height: 3000)
         
+        navigationController?.navigationBar.barTintColor = UIColor.black
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+        
     }
     func dataLoaded() {
         activityIndicator.stopAnimating()
@@ -79,6 +82,7 @@ class ComicListViewController: UIViewController, UICollectionViewDelegate, UICol
         selectedComic = networking.comics[indexPath.row]
         networking.getComicDetails(comic: selectedComic, dataLoadedCallbackFunction: detailLoaded)
         networking.getAllCharactersInComic(items: selectedComic.characters.items , dataLoadedCallbackFunction: detailLoaded)
+        collectionView.allowsSelection = false
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -90,7 +94,7 @@ class ComicListViewController: UIViewController, UICollectionViewDelegate, UICol
     func detailLoaded() {
         activityIndicator.isHidden = true
         activityIndicator.stopAnimating()
-        
+        collectionView.allowsSelection = true
         performSegue(withIdentifier: "toDetail", sender: self)
     }
     

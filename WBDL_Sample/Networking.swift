@@ -23,9 +23,9 @@ class Networking {
     func getComics(searchQuerry: String = "", dataLoadedCallbackFunction: (() -> Void)?) {
         var urlString = ""
         if searchQuerry != "" {
-            urlString = createURL(endpoint: "https://gateway.marvel.com/v1/public/comics") + "&dateDescriptor=thisMonth&titleStartsWith=" + searchQuerry
+            urlString = createURL(endpoint: "https://gateway.marvel.com/v1/public/comics") + "&limit=50&dateDescriptor=thisMonth&titleStartsWith=" + searchQuerry
         } else {
-             urlString = createURL(endpoint: "https://gateway.marvel.com/v1/public/comics") + "&dateDescriptor=thisMonth"
+             urlString = createURL(endpoint: "https://gateway.marvel.com/v1/public/comics") + "&limit=50&dateDescriptor=thisMonth"
         }
         if let url = NSURL(string: urlString) {
             var request = URLRequest(url: url as URL)
