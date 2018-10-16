@@ -14,10 +14,8 @@ class Networking {
     var pubKey = "14d1b0a1a810fcbc99316e8a9560e284"
     var privKey = "03cb006270c462eea57919265558dedddbd0916d"
     var comics: [Comic] = []
-    //var seriesComics: [Item] = []
     var seriesComicsDict: [String:String] = [:]
     var comicCharactersArray: [CharacterInfo] = []
-    var totalCount: Int!
     var loadedCount = 0
     
     func getComics(searchQuerry: String = "", dataLoadedCallbackFunction: (() -> Void)?) {
@@ -42,8 +40,6 @@ class Networking {
                         if comicObject.data.results.count > 0 {
                             self.comics = comicObject.data.results
                         }
-                        //total count used for infinite scrolling offset calculation
-                        self.totalCount = comicObject.data.total
                         
                         if dataLoadedCallbackFunction != nil {
                             DispatchQueue.main.async(execute: {
@@ -67,10 +63,6 @@ class Networking {
     }
     
     func getComicDetails(comic: Comic, dataLoadedCallbackFunction: (() -> Void)?) {
-        // let operation1 = BlockOperation{
-        
-        //   func getSeies() {
-        // if comic.series.resourceURI != nil {
         let urlString = self.createURL(endpoint: comic.series.resourceURI)
         if let url = NSURL(string: urlString) {
             var request = URLRequest(url: url as URL)
@@ -92,26 +84,9 @@ class Networking {
                 }
             }
             task.resume()
-            
-            //}
         }
         
-        //  }
         
-        func getCharacters() {
-        }
-        
-        func getCreators() {
-            
-        }
-        
-        // }
-        
-        //        let operation2 = BlockOperation {
-        //            print("yay")
-        //            // Now, operation2 will fire off once operation1 has completed, with results for artists, tracks and albums
-        //        }
-        //        operation2.addDependency(operation1)
     }
     
     func getAllComicsInSeries(items: [Item], dataLoadedCallbackFunction: (() -> Void)?) {
@@ -120,10 +95,7 @@ class Networking {
         if items.count == 0 {
             loadController(dataLoadedCallbackFunction: dataLoadedCallbackFunction)
         }
-        var comics = items
-//        if items.count >  {
-//            comics = Array(items.prefix(2))
-//        }
+        let comics = items
         for comic in comics {
             let urlString = self.createURL(endpoint: comic.resourceURI)
             
@@ -191,11 +163,11 @@ class Networking {
                 }
                 task.resume()
                 
-                //}
             }
         }
     }
     
+    // controller for loaded api calls
     func loadController( dataLoadedCallbackFunction: (() -> Void)?) {
         loadedCount += 1
         if loadedCount == 2 {

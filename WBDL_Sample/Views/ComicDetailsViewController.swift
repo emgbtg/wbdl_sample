@@ -45,6 +45,7 @@ class ComicDetailsViewController: UIViewController, UICollectionViewDelegate, UI
     //var series:
     
     override func viewWillAppear(_ animated: Bool) {
+        // Data is often incomplete in this API. This logic will adjust the layout accordingly.
         var newHeight = containerView.frame.size.height
         if characters.count == 0 || comicsInSeriesDict.count <= 1 {
             if characters.count == 0 {
@@ -103,8 +104,6 @@ class ComicDetailsViewController: UIViewController, UICollectionViewDelegate, UI
         flowLayout2.minimumInteritemSpacing = 0.0
         charactersCollectionView.collectionViewLayout = flowLayout2
 
-        // Data is often incomplete in this API. This logic will adjust the layout accordingly.
-        
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView.tag == 0 {

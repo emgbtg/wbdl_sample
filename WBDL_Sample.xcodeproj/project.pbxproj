@@ -94,18 +94,15 @@
 		A53E452A216E3B0A0023ABE6 /* WBDL_Sample */ = {
 			isa = PBXGroup;
 			children = (
-				A53E452B216E3B0A0023ABE6 /* AppDelegate.swift */,
 				A53E452F216E3B0A0023ABE6 /* Main.storyboard */,
+				A53E4534216E3B0D0023ABE6 /* LaunchScreen.storyboard */,
+				A53E452B216E3B0A0023ABE6 /* AppDelegate.swift */,
 				A530483D216E72EA0083384C /* Networking.swift */,
-				A526253A217145D200AD779F /* Character.swift */,
-				A530483F216E7D780083384C /* Comic.swift */,
-				A5304843216FD8C50083384C /* Series.swift */,
-				A5304841216F80240083384C /* ComicListViewController.swift */,
-				D798E29421725A110050D3D0 /* ComicDetailsViewController.swift */,
+				D731C4D821756E7600DE9C69 /* Models */,
+				D731C4D921756E8100DE9C69 /* Views */,
 				A53E4532216E3B0D0023ABE6 /* Assets.xcassets */,
 				A5BF4C1221752B8C0070CBA6 /* marvel.jpg */,
 				D731C4D62175696500DE9C69 /* marvel_universe_icon_png.png */,
-				A53E4534216E3B0D0023ABE6 /* LaunchScreen.storyboard */,
 				A53E4537216E3B0D0023ABE6 /* Info.plist */,
 				A53E454C216E3FA90023ABE6 /* Objective-CBridgingHeader.m */,
 				A53E454B216E3FA80023ABE6 /* WBDL_Sample-Bridging-Header.h */,
@@ -120,6 +117,25 @@
 				A53E4542216E3B0D0023ABE6 /* Info.plist */,
 			);
 			path = WBDL_SampleTests;
+			sourceTree = "<group>";
+		};
+		D731C4D821756E7600DE9C69 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				A526253A217145D200AD779F /* Character.swift */,
+				A530483F216E7D780083384C /* Comic.swift */,
+				A5304843216FD8C50083384C /* Series.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		D731C4D921756E8100DE9C69 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				A5304841216F80240083384C /* ComicListViewController.swift */,
+				D798E29421725A110050D3D0 /* ComicDetailsViewController.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

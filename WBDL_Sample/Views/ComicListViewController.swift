@@ -34,7 +34,7 @@ class ComicListViewController: UIViewController, UICollectionViewDelegate, UICol
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.contentInset = UIEdgeInsets(top: 23, left: 16, bottom: 10, right: 16)
-
+        
         networking.getComics(dataLoadedCallbackFunction: dataLoaded)
         
         searchTextField.delegate = self
@@ -61,7 +61,7 @@ class ComicListViewController: UIViewController, UICollectionViewDelegate, UICol
         
         cell.containerView.layer.cornerRadius = 8
         cell.containerView.layer.masksToBounds = true
-
+        
         cell.label.adjustsFontSizeToFitWidth = true
         cell.label.text = self.networking.comics[indexPath.row].title
         
@@ -133,7 +133,7 @@ extension UIImageView {
         URLSession.shared.dataTask(with: NSURL(string: urlString)! as URL, completionHandler: { (data, response, error) -> Void in
             
             if error != nil {
-                print(error)
+                
                 return
             }
             DispatchQueue.main.async(execute: { () -> Void in
@@ -143,30 +143,3 @@ extension UIImageView {
             
         }).resume()
     }}
-extension CALayer {
-    func applyShadow(
-        color: UIColor = .black,
-        alpha: Float = 0.1,
-        x: CGFloat = 0,
-        y: CGFloat = 2,
-        blur: CGFloat = 4,
-        spread: CGFloat = 1)
-    {
-        shadowColor = color.cgColor
-        shadowOpacity = alpha
-        shadowOffset = CGSize(width: x, height: y)
-        shadowRadius = blur / 2.0
-        if spread == 0 {
-            shadowPath = nil
-        } else {
-            let dx = -spread
-            let rect = bounds.insetBy(dx: dx, dy: dx)
-            shadowPath = UIBezierPath(rect: rect).cgPath
-        }
-    }
-}
-extension UIScrollView {
-    func updateContentView() {
-        contentSize.height = subviews.sorted(by: { $0.frame.maxY < $1.frame.maxY }).last?.frame.maxY ?? contentSize.height
-    }
-}
