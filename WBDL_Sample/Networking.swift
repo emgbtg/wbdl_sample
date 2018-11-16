@@ -10,9 +10,9 @@ import Foundation
 import CommonCrypto
 
 class Networking {
-    
-    var pubKey = "14d1b0a1a810fcbc99316e8a9560e284"
-    var privKey = "03cb006270c462eea57919265558dedddbd0916d"
+    //ENTER YOUR PUBLIC AND PRIVATE KEY//
+    var pubKey: String = {YOUR PUBLIC KEY}
+    var privKey: String = {YOUR PRIVATE KEY}
     var comics: [Comic] = []
     var seriesComicsDict: [String:String] = [:]
     var comicCharactersArray: [CharacterInfo] = []
