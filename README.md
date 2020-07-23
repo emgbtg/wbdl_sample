@@ -1,4 +1,4 @@
-# Marvel Universze
+# Marvel Universe
 
 This coding sample uses the Marvel Developer API (https://developer.marvel.com/) to provide a tool that allows a user to explore the Marvel Comics Universe. 
 
